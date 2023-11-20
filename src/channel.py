@@ -23,13 +23,49 @@ class Channel:
         # описание канала
         self.description = self.channel_info['items'][0]['snippet']['description']
         # ссылка на канал
-        self.url = "https://www.youtube.com/channel/" + self.channel_info['items'][0]['snippet']['customUrl']
+        self.url = f'https://www.youtube.com/channel/{self.__channel_id}'
         # количество подписчиков
         self.subscribers_count = int(self.channel_info['items'][0]['statistics']['subscriberCount'])
         # количество видео
         self.video_count = int(self.channel_info['items'][0]['statistics']['videoCount'])
         # общее количество просмотров
         self.view_count = int(self.channel_info['items'][0]['statistics']['viewCount'])
+
+    def __str__(self):
+        """Метод для отображения информации (возвращает название канала и ссылку на него)
+        об объекте класса для пользователей"""
+        return f'"{self.title}" ("{self.url}")'
+
+    def __add__(self, other):
+        """"Метод реализации оператора сложения двух каналов между собой
+        по количеству подписчиков."""
+        return self.subscribers_count + other.subscribers_count
+
+    def __sub__(self, other):
+        """"Метод реализации оператора вычитания двух каналов между собой
+        по количеству подписчиков."""
+        return self.subscribers_count - other.subscribers_count
+
+    def __lt__(self, other):
+        """"Метод реализации оператора сравнения «меньше» двух каналов
+        между собой по количеству подписчиков."""
+        return self.subscribers_count < other.subscribers_count
+
+    def __le__(self, other):
+        """"Метод реализации оператора сравнения «меньше или равно»
+        двух каналов между собой по количеству подписчиков."""
+        return self.subscribers_count <= other.subscribers_count
+
+    def __gt__(self, other):
+        """"Метод реализации оператора сравнения «больше» двух каналов
+        между собой по количеству подписчиков."""
+        return self.subscribers_count > other.subscribers_count
+
+    def __ge__(self, other):
+        """"Метод реализации оператора сравнения «больше или равно»
+        двух каналов между собой по количеству подписчиков."""
+        return self.subscribers_count >= other.subscribers_count
+
 
     # Данный декоратор прописан для того, что вывести ошибку, согласно задания.
     # @property
