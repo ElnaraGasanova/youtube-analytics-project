@@ -9,19 +9,25 @@ class Video:
         """Экземпляр инициализируется id канала.
         Дальше все данные будут подтягиваться по API."""
 
-        # id канала
-        self.channel_id = channel_id
-        self.youtube = youtube
-        # ссылка на видео
-        self.channel = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                       id=channel_id
-                                       ).execute()
-        # название
-        self.title = self.channel['items'][0]['snippet']['title']
-        # количество просмотров
-        self.view_count = self.channel["items"][0]["statistics"]['viewCount']
-        # количество лайков
-        self.like_count = int(self.channel['items'][0]['statistics']['likeCount'])
+        try:
+            # id канала
+            self.channel_id = channel_id
+            self.youtube = youtube
+            # ссылка на видео
+            self.channel = self.youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                           id=channel_id
+                                           ).execute()
+            # название
+            self.title = self.channel['items'][0]['snippet']['title']
+            # количество просмотров
+            self.view_count = self.channel["items"][0]["statistics"]['viewCount']
+            # количество лайков
+            self.like_count = int(self.channel['items'][0]['statistics']['likeCount'])
+        except IndexError:
+            self.channel_id = channel_id
+            self.title = None
+            self.view_count = None
+            self.like_count = None
 
     def __str__(self):
         return f"{self.title}"
